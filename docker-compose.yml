@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    container_name: lptrw-app
+    working_dir: /var/www/html
+    volumes:
+      - ./src:/var/www/html
+
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: lptrw-nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    depends_on:
+      - app
