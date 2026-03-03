@@ -3,3 +3,4 @@
 ## Session 2
 
 1. PHP Docker Tutorial - Nginx - PHP-FPM VS Apache
+2. PHP Classes & Objects - Typed Properties - Constructors & Destructors
