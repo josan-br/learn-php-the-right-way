@@ -5,6 +5,8 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get upgrade -y \
     && apt-get install -y git curl zip unzip
 
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 EXPOSE 9000
 
 CMD ["php-fpm"]
