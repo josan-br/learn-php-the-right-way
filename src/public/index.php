@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../Transaction.php';
+require_once __DIR__ . '/../Notification/Email.php';
+require_once __DIR__ . '/../PaymentGateway/Paddle/CustomerProfile.php';
+require_once __DIR__ . '/../PaymentGateway/Paddle/Transaction.php';
+require_once __DIR__ . '/../PaymentGateway/Stripe/Transaction.php';
 
-// Classes & Objects
-$transaction = (new Transaction(100, 'Transaction 1'))
-    ->addTax(8)
-    ->applyDiscount(10);
+// use PaymentGateway\Paddle;
+use PaymentGateway\Paddle\Transaction;
+// use PaymentGateway\Paddle\{Transaction, CustomerProfile};
+use PaymentGateway\Stripe\Transaction as StripeTransaction;
 
-$amount = $transaction->getAmount();
+$paddleTransaction = new Transaction();
+$stripeTransaction = new StripeTransaction();
 
-$transaction = null;
-
-var_dump($amount);
+var_dump($paddleTransaction, $stripeTransaction);
