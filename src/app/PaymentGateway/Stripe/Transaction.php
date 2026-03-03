@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PaymentGateway\Stripe;
+namespace App\PaymentGateway\Stripe;
 
 class Transaction
 {
     public function __construct() {
-        var_dump(new \Notification\Email());
+        var_dump(new \App\Notification\Email());
     }
 }
