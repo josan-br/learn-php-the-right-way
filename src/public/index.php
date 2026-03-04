@@ -5,7 +5,10 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\PaymentGateway\Paddle\Transaction;
+use App\PaymentGateway\Paddle\TransactionStatus;
 
-$paddleTransaction = new Transaction();
+$transaction = new Transaction();
 
-var_dump($paddleTransaction);
+$transaction->setStatus(TransactionStatus::PAID);
+
+var_dump($transaction);
