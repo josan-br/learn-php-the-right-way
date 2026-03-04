@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\PaymentGateway\Paddle\Transaction;
-use App\PaymentGateway\Paddle\TransactionStatus;
+use App\PaymentGateway\Stripe\Transaction;
 
-$transaction = new Transaction();
+$transactions = [];
 
-$transaction->setStatus(TransactionStatus::PAID);
+for ($i = 0; $i < 5; $i++) {
+    $transactions[] = new Transaction(100, "Transaction {$i}");
+}
 
-var_dump($transaction);
+var_dump(Transaction::getCount());

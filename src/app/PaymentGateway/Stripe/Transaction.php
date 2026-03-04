@@ -6,7 +6,17 @@ namespace App\PaymentGateway\Stripe;
 
 class Transaction
 {
-    public function __construct() {
-        var_dump(new \App\Notification\Email());
+    private static int $count = 0;
+
+    public function __construct(
+        public float $amount = 0.0,
+        public string $description = '',
+    ) {
+        self::$count++;
+    }
+
+    public  static function getCount(): int
+    {
+        return self::$count;
     }
 }
