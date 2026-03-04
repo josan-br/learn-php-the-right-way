@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$service = new App\DebitCollectionService();
+$classA = new App\LateStatic\ClassA();
+$classB = new App\LateStatic\ClassB();
 
-echo $service->collectDebit(new App\CollectionAgency()) . PHP_EOL;
+echo $classA->getName() . PHP_EOL;
+echo $classB->getName() . PHP_EOL;
