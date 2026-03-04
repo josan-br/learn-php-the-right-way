@@ -4,10 +4,15 @@ namespace App\LateStatic;
 
 class ClassA
 {
-    protected string $name = 'A';
+    protected static string $name = 'A';
 
-    public function getName(): string
+    public static function getName(): string
     {
-        return $this->name;
+        return self::$name;
+    }
+    
+    public static function getStaticName(): string
+    {
+        return static::$name;
     }
 }
