@@ -4,17 +4,31 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\LateStatic\ClassA;
-use App\LateStatic\ClassB;
+use App\Coffee\AllInOneCoffeeMaker;
+use App\Coffee\CappuccinoMaker;
+use App\Coffee\CoffeeMaker;
+use App\Coffee\LatteMaker;
 
-// $classA = new ClassA();
-// $classB = new ClassB();
+// $coffeeMaker = new CoffeeMaker();
+// $coffeeMaker->makeCoffee();
 
-// echo $classA->getName() . PHP_EOL;
-// echo $classB->getName() . PHP_EOL;
+// $cappuccinoMaker = new CappuccinoMaker();
+// $cappuccinoMaker->makeCoffee();
+// $cappuccinoMaker->makeCappuccino();
 
-// echo ClassA::getName() . PHP_EOL; // Output: A
-// echo ClassB::getName() . PHP_EOL; // Output: A, because self:: in ClassA::getName() refers to ClassA, not ClassB.
+// $latteMaker = new LatteMaker();
+// $latteMaker->makeCoffee();
+// $latteMaker->makeLatte();
 
-echo ClassA::getStaticName() . PHP_EOL; // Output: A, because static:: in ClassA::getStaticName() refers to the class that was called, which is ClassA.
-echo ClassB::getStaticName() . PHP_EOL; // Output: B, because static:: in ClassA::getStaticName() refers to the class that was called, which is ClassB. This is the key difference between self:: and static:: in PHP.
+// $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
+// $allInOneCoffeeMaker->makeCoffee();
+// $allInOneCoffeeMaker->makeLatte();
+// $allInOneCoffeeMaker->makeOriginalLatte();
+// $allInOneCoffeeMaker->makeCappuccino();
+
+// LatteMaker::foo();
+
+CoffeeMaker::$foo = 'foo';
+LatteMaker::$foo = 'bar';
+
+echo CoffeeMaker::$foo . ' ' . LatteMaker::$foo . PHP_EOL;
