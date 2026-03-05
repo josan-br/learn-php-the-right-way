@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Coffee\AllInOneCoffeeMaker;
-use App\Coffee\CappuccinoMaker;
-use App\Coffee\CoffeeMaker;
-use App\Coffee\LatteMaker;
+use App\Invoice;
+use App\Customer;
 
-// $coffeeMaker = new CoffeeMaker();
-// $coffeeMaker->makeCoffee();
+function foo(): void
+{
+    echo 'Foo' . PHP_EOL;
+}
 
-// $cappuccinoMaker = new CappuccinoMaker();
-// $cappuccinoMaker->makeCoffee();
-// $cappuccinoMaker->makeCappuccino();
+function process()
+{
+    try {
+        $customer = new Customer(['name' => 'John Doe']);
 
-// $latteMaker = new LatteMaker();
-// $latteMaker->makeCoffee();
-// $latteMaker->makeLatte();
+        $invoice = new Invoice($customer);
 
-// $allInOneCoffeeMaker = new AllInOneCoffeeMaker();
-// $allInOneCoffeeMaker->makeCoffee();
-// $allInOneCoffeeMaker->makeLatte();
-// $allInOneCoffeeMaker->makeOriginalLatte();
-// $allInOneCoffeeMaker->makeCappuccino();
+        $invoice->process(-25.0);
 
-// LatteMaker::foo();
+        return true;
+    } catch (\Throwable $th) {
+        echo $th->getMessage() . PHP_EOL;
 
-CoffeeMaker::$foo = 'foo';
-LatteMaker::$foo = 'bar';
+        return foo();
+    } finally {
+        echo 'Finally block executed.' . PHP_EOL;
 
-echo CoffeeMaker::$foo . ' ' . LatteMaker::$foo . PHP_EOL;
+        return -1;
+    }
+}
+
+var_dump(process());
