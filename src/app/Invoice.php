@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Exceptions\MissingBillingInformationException;
+use App\Exceptions\InvoiceException;
 
 class Invoice
 {
@@ -13,11 +13,11 @@ class Invoice
     public function process(float $amount): void
     {
         if ($amount <= 0) {
-            throw new \InvalidArgumentException('Amount must be greater than zero.');
+            throw InvoiceException::invalidAmount();
         }
 
         if (empty($this->customer->getBillingInfo())) {
-            throw new MissingBillingInformationException();
+            throw InvoiceException::missingBillingInfo();
         }
 
         echo "Processing \${$amount} invoice - ";
