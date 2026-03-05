@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Debits;
 
 class CollectionAgency implements DebitCollector
 {
