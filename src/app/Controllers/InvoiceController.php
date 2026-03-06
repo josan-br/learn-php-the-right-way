@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Responses\RedirectResponse;
 use App\View;
 
 class InvoiceController
@@ -18,9 +19,12 @@ class InvoiceController
         return View::make('invoices/create', ['title' => 'Create Invoice']);
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         echo 'Invoice created with the following data: ';
+
         var_dump($_POST);
+
+        return new RedirectResponse('/invoices');
     }
 }
