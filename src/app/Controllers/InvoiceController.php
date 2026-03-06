@@ -4,22 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\View;
+
 class InvoiceController
 {
-    public function index(): string
+    public function index(): View
     {
-        return 'Invoices';
+        return View::make('invoices/index', ['title' => 'Invoices']);
     }
 
-    public function create(): string
+    public function create(): View
     {
-        return <<<HTML
-        <form action="/invoices" method="post">
-            <input type="text" name="customer_name" placeholder="Customer Name">
-            <input type="number" name="amount" placeholder="Amount">
-            <button type="submit">Create Invoice</button>
-        </form>
-        HTML;
+        return View::make('invoices/create', ['title' => 'Create Invoice']);
     }
 
     public function store()

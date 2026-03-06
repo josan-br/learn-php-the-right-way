@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\View;
+
 class UploadController
 {
-    public function create()
+    public function create(): View
     {
-        return <<<HTML
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="receipt">
-            <button type="submit">Upload</button>
-        </form>
-        HTML;
+        return View::make('upload', [
+            'title' => 'Upload a receipt',
+        ]);
     }
 
     public function store()
