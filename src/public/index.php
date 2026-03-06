@@ -9,18 +9,24 @@ session_start();
 define('STORAGE_PATH', __DIR__ . '/../storage');
 define('VIEW_PATH', __DIR__ . '/../views');
 
-$router = new App\Router();
+try {
+    $router = new App\Router();
 
-$router->get('/', [\App\Controllers\HomeController::class, 'index'])
-    ->get('/invoices', [\App\Controllers\InvoiceController::class, 'index'])
-    ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-    ->post('/invoices', [\App\Controllers\InvoiceController::class, 'store'])
-    //
-    ->get('/upload', [\App\Controllers\UploadController::class, 'create'])
-    ->post('/upload', [\App\Controllers\UploadController::class, 'store'])
-;
+    $router->get('/', [\App\Controllers\HomeController::class, 'index'])
+        ->get('/invoices', [\App\Controllers\InvoiceController::class, 'index'])
+        ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
+        ->post('/invoices', [\App\Controllers\InvoiceController::class, 'store'])
+        //
+        ->get('/upload', [\App\Controllers\UploadController::class, 'create'])
+        ->post('/upload', [\App\Controllers\UploadController::class, 'store'])
+    ;
 
-echo $router->resolve(
-    $_SERVER['REQUEST_URI'],
-    $_SERVER['REQUEST_METHOD']
-);
+    echo $router->resolve(
+        $_SERVER['REQUEST_URI'],
+        $_SERVER['REQUEST_METHOD']
+    );
+} catch (\App\Exceptions\RouteNotFoundException) {
+    echo (new \App\Controllers\ErrorController())->error404();
+} catch (\throwable) {
+    echo (new \App\Controllers\ErrorController())->error500();
+}
