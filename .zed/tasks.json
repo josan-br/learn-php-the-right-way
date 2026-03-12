@@ -1,0 +1,12 @@
+[
+    {
+        "label": "Start docker services",
+        "command": "docker compose up -d",
+        "hide": "always",
+    },
+    {
+        "label": "Stop docker services",
+        "command": "docker compose stop",
+        "hide": "always",
+    },
+]
