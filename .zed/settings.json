@@ -1,7 +1,7 @@
 {
     "lsp": {
         "intelephense": {
-            "settings": {
+            "initialization_options": {
                 "intelephense.environment.phpVersion": "8.0",
             },
         },
