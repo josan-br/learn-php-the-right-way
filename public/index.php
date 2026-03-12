@@ -28,7 +28,8 @@ $router
     ->get("/error/500", [\App\Controllers\ErrorController::class, "error500"])
 ;
 
-(new \App\App($router, [
-    'uri' => $_SERVER['REQUEST_URI'],
-    'method' => $_SERVER['REQUEST_METHOD']
-]))->run();
+(new \App\App(
+    $router,
+    new \App\Request($_SERVER),
+    new \App\Config($_ENV)
+))->run();

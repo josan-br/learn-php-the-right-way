@@ -6,7 +6,8 @@ final class App
 {
     public function __construct(
         private Router $router,
-        private array $request
+        private Request $request,
+        private Config $config,
     ) {
         $this->startSession();
         $this->registerExceptionHandler();
@@ -15,8 +16,8 @@ final class App
     public function run(): void
     {
         echo $this->router->resolve(
-            $this->request['uri'],
-            $this->request['method']
+            $this->request->getUri(),
+            $this->request->getMethod()
         );
     }
 
