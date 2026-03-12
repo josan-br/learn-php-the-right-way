@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-define("APP_PATH", __DIR__ . "/../");
-define("STORAGE_PATH", APP_PATH . "storage");
-define("VIEW_PATH", APP_PATH . "views");
+define("BASE_PATH", dirname(__DIR__));
+define("STORAGE_PATH", BASE_PATH . "/storage");
+define("VIEW_PATH", BASE_PATH . "/views");
 
-require APP_PATH . "vendor/autoload.php";
+require BASE_PATH . "/vendor/autoload.php";
+
+\Dotenv\Dotenv::createImmutable(BASE_PATH)->load();
 
 $router = new App\Router();
 
