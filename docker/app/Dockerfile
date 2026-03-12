@@ -16,6 +16,8 @@ RUN apt-get autoremove -y && apt-get clean \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN docker-php-ext-install pdo pdo_mysql
+
 RUN groupadd -g ${GROUP_ID} ${USERNAME} \
     && useradd -u ${USER_ID} -g ${USERNAME} -m ${USERNAME}
 
