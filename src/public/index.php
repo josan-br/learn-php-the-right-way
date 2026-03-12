@@ -2,31 +2,28 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+define("APP_PATH", __DIR__ . "/../");
+define("STORAGE_PATH", APP_PATH . "storage");
+define("VIEW_PATH", APP_PATH . "views");
 
-session_start();
+require APP_PATH . "vendor/autoload.php";
 
-define('STORAGE_PATH', __DIR__ . '/../storage');
-define('VIEW_PATH', __DIR__ . '/../views');
+$router = new App\Router();
 
-try {
-    $router = new App\Router();
+$router
+    ->get("/", [\App\Controllers\HomeController::class, "index"])
+    ->get("/invoices", [\App\Controllers\InvoiceController::class, "index"])
+    ->get("/invoices/create", [
+        \App\Controllers\InvoiceController::class,
+        "create",
+    ])
+    ->post("/invoices", [\App\Controllers\InvoiceController::class, "store"])
+    //
+    ->get("/upload", [\App\Controllers\UploadController::class, "create"])
+    ->post("/upload", [\App\Controllers\UploadController::class, "store"])
+    //
+    ->get("/error/404", [\App\Controllers\ErrorController::class, "error404"])
+    ->get("/error/500", [\App\Controllers\ErrorController::class, "error500"])
+;
 
-    $router->get('/', [\App\Controllers\HomeController::class, 'index'])
-        ->get('/invoices', [\App\Controllers\InvoiceController::class, 'index'])
-        ->get('/invoices/create', [\App\Controllers\InvoiceController::class, 'create'])
-        ->post('/invoices', [\App\Controllers\InvoiceController::class, 'store'])
-        //
-        ->get('/upload', [\App\Controllers\UploadController::class, 'create'])
-        ->post('/upload', [\App\Controllers\UploadController::class, 'store'])
-    ;
-
-    echo $router->resolve(
-        $_SERVER['REQUEST_URI'],
-        $_SERVER['REQUEST_METHOD']
-    );
-} catch (\App\Exceptions\RouteNotFoundException) {
-    echo (new \App\Controllers\ErrorController())->error404();
-} catch (\throwable) {
-    echo (new \App\Controllers\ErrorController())->error500();
-}
+echo (new \App\Bootstrap($router))->resolveRequest();
