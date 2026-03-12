@@ -1,0 +1,45 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App;
+
+use PDO;
+use PDOException;
+
+/**
+ * @mixin PDO
+ */
+final class DB
+{
+    private PDO $pdo;
+
+    private const DEFAULT_OPTIONS = [
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+
+    ];
+
+    public function __construct(protected array $config)
+    {
+        try {
+            $driver = $this->config['driver'];
+            $host = $this->config['host'];
+            $database = $this->config['database'];
+
+            $this->pdo = new PDO(
+                "{$driver}:host={$host};dbname={$database}",
+                $this->config['username'],
+                $this->config['password'],
+                $this->config['options'] ?? static::DEFAULT_OPTIONS
+            );
+        } catch (PDOException $e) {
+            throw new PDOException($e->getMessage(), (int) $e->getCode());
+        }
+    }
+
+    public function __call(string $method, array $arguments): mixed
+    {
+        return call_user_func_array([$this->pdo, $method], $arguments);
+    }
+}

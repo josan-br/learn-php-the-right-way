@@ -4,6 +4,8 @@ namespace App;
 
 final class App
 {
+    private static DB $db;
+
     public function __construct(
         private Router $router,
         private Request $request,
@@ -11,6 +13,8 @@ final class App
     ) {
         $this->startSession();
         $this->registerExceptionHandler();
+
+        static::$db = new DB($config->database ?? []);
     }
 
     public function run(): void
@@ -19,6 +23,11 @@ final class App
             $this->request->getUri(),
             $this->request->getMethod()
         );
+    }
+
+    public static function db(): DB
+    {
+        return static::$db;
     }
 
     private function startSession(): void
