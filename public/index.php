@@ -28,4 +28,7 @@ $router
     ->get("/error/500", [\App\Controllers\ErrorController::class, "error500"])
 ;
 
-echo (new \App\Bootstrap($router))->resolveRequest();
+(new \App\App($router, [
+    'uri' => $_SERVER['REQUEST_URI'],
+    'method' => $_SERVER['REQUEST_METHOD']
+]))->run();

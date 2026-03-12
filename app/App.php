@@ -2,20 +2,21 @@
 
 namespace App;
 
-final class Bootstrap
+final class App
 {
     public function __construct(
-        private Router $router
+        private Router $router,
+        private array $request
     ) {
         $this->startSession();
         $this->registerExceptionHandler();
     }
 
-    public function resolveRequest(): mixed
+    public function run(): void
     {
-        return $this->router->resolve(
-            $_SERVER['REQUEST_URI'],
-            $_SERVER['REQUEST_METHOD']
+        echo $this->router->resolve(
+            $this->request['uri'],
+            $this->request['method']
         );
     }
 
