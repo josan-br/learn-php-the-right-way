@@ -1,0 +1,9 @@
+{
+    "lsp": {
+        "intelephense": {
+            "settings": {
+                "intelephense.environment.phpVersion": "8.0",
+            },
+        },
+    },
+}
