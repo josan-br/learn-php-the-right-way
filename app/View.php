@@ -68,7 +68,7 @@ class View implements \Stringable
 
         foreach ($params as $key => $value) {
             $search[] = "{{{$key}}}";
-            $replace[] = $value;
+            $replace[] = is_array($value) ? json_encode($value) : $value;
         }
 
         return str_replace($search, $replace, (string) ob_get_clean());
