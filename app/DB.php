@@ -8,7 +8,22 @@ use PDO;
 use PDOException;
 
 /**
- * @mixin PDO
+ * @method bool beginTransaction()
+ * @method bool commit()
+ * @method ?string errorCode()
+ * @method array errorInfo()
+ * @method int|false exec(string $statement)
+ * @method mixed getAttribute(int $attribute)
+ * @method bool inTransaction()
+ * @method string|false lastInsertId(?string $name = null)
+ * @method \PDOStatement|false prepare(string $query, array $options = [])
+ * @method \PDOStatement|false query(string $query, ?int $fetchMode = null)
+ * @method \PDOStatement|false query(string $query, ?int $fetchMode = PDO::FETCH_COLUMN, int $colno)
+ * @method \PDOStatement|false query(string $query, ?int $fetchMode = PDO::FETCH_CLASS, string $classname, array $constructorArgs)
+ * @method \PDOStatement|false query(string $query, ?int $fetchMode = PDO::FETCH_INTO, object $object)
+ * @method string|false quote(string $string, int $type = PDO::PARAM_STR)
+ * @method bool rollBack()
+ * @method bool setAttribute(int $attribute, mixed $value)
  */
 final class DB
 {
@@ -17,8 +32,9 @@ final class DB
     private const DEFAULT_OPTIONS = [
         PDO::ATTR_EMULATE_PREPARES => false,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-
     ];
+
+    private const UNCALLBLED_METHODS = ['connect', 'getAvailableDrivers'];
 
     public function __construct(protected array $config)
     {
@@ -40,6 +56,15 @@ final class DB
 
     public function __call(string $method, array $arguments): mixed
     {
+        if (in_array($method, static::UNCALLBLED_METHODS, true)) {
+            throw new \BadMethodCallException("The {$method} does not exists.");
+        }
+
         return call_user_func_array([$this->pdo, $method], $arguments);
+    }
+
+    public function rollBack(): bool
+    {
+        return $this->pdo->inTransaction() ? $this->pdo->rollBack() : true;
     }
 }
