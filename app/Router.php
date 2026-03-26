@@ -23,6 +23,7 @@ final class Router
     public function resolve(string $requestUri, string $requestMethod): mixed
     {
         $route = explode('?', $requestUri)[0];
+        $requestMethod = strtoupper($requestMethod);
 
         $action = $this->routes[$requestMethod][$route] ?? null;
 
@@ -53,8 +54,15 @@ final class Router
         throw new RouteNotFoundException();
     }
 
+    public function toArray(): array
+    {
+        return $this->routes;
+    }
+
     protected function register(string $method, string $name, callable|array $action): self
     {
+        $method = strtoupper($method);
+
         $this->routes[$method][$name] = $action;
 
         return $this;
