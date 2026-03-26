@@ -4,28 +4,19 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\App;
-
-use App\Models\Invoice;
-use App\Models\User;
-
+use App\Services\InvoiceService;
 use App\View;
 
 class HomeController
 {
+    public function __construct(
+        protected InvoiceService $invoiceService
+    ) {}
+
     public function index(): View
     {
-        $db = App::db();
+        $this->invoiceService->process([], 20);
 
-        $userModel = new User();
-        $invoiceModel = new Invoice();
-
-        $invoiceId = (new \App\Actions\SignUp($db, $userModel, $invoiceModel))
-            ->handle('fulano2@doe.com', 'Jawdwada Doe', 25);
-
-        return View::make('index', [
-            'title' => 'Home',
-            'invoice' => $invoiceModel->find($invoiceId)
-        ]);
+        return View::make('index', ['title' => 'Home']);
     }
 }

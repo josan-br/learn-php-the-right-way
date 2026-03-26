@@ -10,6 +10,10 @@ final class Router
 {
     private array $routes = [];
 
+    public function __construct(
+        protected Container $container
+    ) {}
+
     public function get(string $route, callable|array $action): self
     {
         return $this->register('GET', $route, $action);
@@ -42,7 +46,7 @@ final class Router
                 throw new RouteNotFoundException();
             }
 
-            $instance = new $controller();
+            $instance = $this->container->get($controller);
 
             if (! method_exists($instance, $method)) {
                 throw new RouteNotFoundException();

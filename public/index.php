@@ -10,7 +10,8 @@ require BASE_PATH . "/vendor/autoload.php";
 
 \Dotenv\Dotenv::createImmutable(BASE_PATH)->load();
 
-$router = new App\Router();
+$container = new App\Container();
+$router = new App\Router($container);
 
 $router
     ->get("/", [\App\Controllers\HomeController::class, "index"])

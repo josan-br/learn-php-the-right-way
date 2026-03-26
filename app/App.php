@@ -5,6 +5,7 @@ namespace App;
 final class App
 {
     private static DB $db;
+    private static Container $container;
 
     public function __construct(
         private Router $router,
@@ -14,6 +15,7 @@ final class App
         $this->startSession();
         $this->registerExceptionHandler();
 
+        static::$container = new Container();
         static::$db = new DB($config->database ?? []);
     }
 
@@ -28,6 +30,11 @@ final class App
     public static function db(): DB
     {
         return static::$db;
+    }
+
+    public static function make(string $abstract)
+    {
+        return static::$container->get($abstract);
     }
 
     private function startSession(): void
