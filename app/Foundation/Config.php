@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Foundation;
 
 /**
  * @property-read array{host:string, username:string, password:string, database:string, driver:string}|null $database

@@ -2,6 +2,12 @@
 
 namespace App;
 
+use App\Foundation\Config;
+use App\Foundation\Container;
+use App\Foundation\DB;
+use App\Foundation\Request;
+use App\Foundation\Router;
+
 final class App
 {
     private static DB $db;

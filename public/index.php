@@ -10,13 +10,13 @@ require BASE_PATH . "/vendor/autoload.php";
 
 \Dotenv\Dotenv::createImmutable(BASE_PATH)->load();
 
-$container = new App\Container();
+$container = new App\Foundation\Container();
 
 $container->set(\App\Services\EmailServiceInterface::class, \App\Services\EmailService::class);
 $container->set(\App\Services\PaymentGatewayInterface::class, \App\Services\StripePayment::class);
 $container->set(\App\Services\SalesTaxServiceInterface::class, \App\Services\SalesTaxService::class);
 
-$router = new App\Router($container);
+$router = new App\Foundation\Router($container);
 
 $router
     ->get("/", [\App\Controllers\HomeController::class, "index"])
@@ -37,6 +37,6 @@ $router
 (new \App\App(
     $container,
     $router,
-    new \App\Request($_SERVER),
-    new \App\Config($_ENV)
+    new \App\Foundation\Request($_SERVER),
+    new \App\Foundation\Config($_ENV)
 ))->run();

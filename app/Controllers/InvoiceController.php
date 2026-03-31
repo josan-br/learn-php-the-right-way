@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Foundation\View;
 use App\Responses\RedirectResponse;
-use App\View;
 
 class InvoiceController
 {
