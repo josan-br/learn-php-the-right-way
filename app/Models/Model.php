@@ -13,4 +13,11 @@ abstract class Model
     {
         $this->db = \App\App::db();
     }
+
+    protected function lazyFetch(\PDOStatement $statment): \Generator
+    {
+        foreach ($statment as $record) {
+            yield $record;
+        }
+    }
 }
