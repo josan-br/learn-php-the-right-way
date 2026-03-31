@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class SalesTaxService
+class SalesTaxService implements SalesTaxServiceInterface
 {
     public function calculate(float $amount, array $customer): float
     {

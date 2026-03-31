@@ -8,6 +8,7 @@ final class App
     private static Container $container;
 
     public function __construct(
+        Container $container,
         private Router $router,
         private Request $request,
         private Config $config,
@@ -15,7 +16,7 @@ final class App
         $this->startSession();
         $this->registerExceptionHandler();
 
-        static::$container = new Container();
+        static::$container = $container;
         static::$db = new DB($config->database ?? []);
     }
 

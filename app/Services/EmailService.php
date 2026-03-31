@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class EmailService
+class EmailService implements EmailServiceInterface
 {
     public function send(array $customer, string $content): bool
     {

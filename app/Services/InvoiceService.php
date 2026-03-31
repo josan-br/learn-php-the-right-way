@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-class InvoiceService
+class InvoiceService implements InvoiceServiceInterface
 {
     public function __construct(
-        protected SalesTaxService $salesTaxService,
-        protected PaymentGatewayService $gatewayService,
-        protected EmailService $emailService,
+        protected SalesTaxServiceInterface $salesTaxService,
+        protected PaymentGatewayInterface $gatewayService,
+        protected EmailServiceInterface $emailService,
     ) {}
 
     public function process(array $customer, float $amount): bool

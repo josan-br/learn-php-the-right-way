@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App;
 
 use App\Exceptions\ContainerException;
-use App\Exceptions\NotFoundException;
 
 use Psr\Container\ContainerInterface;
-use SebastianBergmann\Type\Type;
 
 class Container implements ContainerInterface
 {
@@ -14,13 +14,17 @@ class Container implements ContainerInterface
 
     public function get(string $id)
     {
-        if ($this->has($id)) {
-            $entry = $this->entries[$id];
+        if (! $this->has($id)) {
+            return $this->resolve($id);
+        }
 
+        $entry = $this->entries[$id];
+
+        if (is_callable($entry)) {
             return $entry($this);
         }
 
-        return $this->resolve($id);
+        return $this->resolve($entry);
     }
 
     public function has(string $id): bool
@@ -28,7 +32,7 @@ class Container implements ContainerInterface
         return isset($this->entries[$id]);
     }
 
-    public function set(string $id, callable $concrete): void
+    public function set(string $id, callable|string $concrete): void
     {
         $this->entries[$id] = $concrete;
     }
