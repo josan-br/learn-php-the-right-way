@@ -2,7 +2,10 @@
     "lsp": {
         "intelephense": {
             "initialization_options": {
-                "intelephense.environment.phpVersion": "8.0",
+                "intelephense.environment.phpVersion": "8.1",
+            },
+            "settings": {
+                "intelephense.environment.phpVersion": "8.1",
             },
         },
     },
