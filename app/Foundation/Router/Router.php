@@ -73,7 +73,7 @@ final class Router
                     /** @var RouteAttribute */
                     $route = $routeAttribute->newInstance();
 
-                    $this->register($route->method, $route->path, [$controller, $method->getName()]);
+                    $this->register($route->method->value, $route->path, [$controller, $method->getName()]);
                 }
             }
         }
