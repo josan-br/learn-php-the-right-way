@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Foundation;
+namespace App\Foundation\Router;
 
 use App\Exceptions\RouteNotFoundException;
+
+use App\Foundation\Container;
+use App\Foundation\Router\Attributes\Route as RouteAttribute;
 
 final class Router
 {
@@ -56,6 +59,24 @@ final class Router
         }
 
         throw new RouteNotFoundException();
+    }
+
+    public function registerRoutesFromControllerAttributes(array $controllers)
+    {
+        foreach ($controllers as $controller) {
+            $methods = (new \ReflectionClass($controller))->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+            foreach ($methods as $method) {
+                $routeAttributes = $method->getAttributes(RouteAttribute::class, \ReflectionAttribute::IS_INSTANCEOF);
+
+                foreach ($routeAttributes as $routeAttribute) {
+                    /** @var RouteAttribute */
+                    $route = $routeAttribute->newInstance();
+
+                    $this->register($route->method, $route->path, [$controller, $method->getName()]);
+                }
+            }
+        }
     }
 
     public function toArray(): array

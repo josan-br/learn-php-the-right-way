@@ -6,7 +6,7 @@ use App\Foundation\Config;
 use App\Foundation\Container;
 use App\Foundation\DB;
 use App\Foundation\Request;
-use App\Foundation\Router;
+use App\Foundation\Router\Router;
 
 final class App
 {

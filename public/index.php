@@ -16,23 +16,14 @@ $container->set(\App\Services\EmailServiceInterface::class, \App\Services\EmailS
 $container->set(\App\Services\PaymentGatewayInterface::class, \App\Services\StripePayment::class);
 $container->set(\App\Services\SalesTaxServiceInterface::class, \App\Services\SalesTaxService::class);
 
-$router = new App\Foundation\Router($container);
+$router = new \App\Foundation\Router\Router($container);
 
-$router
-    ->get("/", [\App\Controllers\HomeController::class, "index"])
-    ->get("/invoices", [\App\Controllers\InvoiceController::class, "index"])
-    ->get("/invoices/create", [
-        \App\Controllers\InvoiceController::class,
-        "create",
-    ])
-    ->post("/invoices", [\App\Controllers\InvoiceController::class, "store"])
-    //
-    ->get("/upload", [\App\Controllers\UploadController::class, "create"])
-    ->post("/upload", [\App\Controllers\UploadController::class, "store"])
-    //
-    ->get("/error/404", [\App\Controllers\ErrorController::class, "error404"])
-    ->get("/error/500", [\App\Controllers\ErrorController::class, "error500"])
-;
+$router->registerRoutesFromControllerAttributes([
+    \App\Controllers\ErrorController::class,
+    \App\Controllers\HomeController::class,
+    \App\Controllers\InvoiceController::class,
+    \App\Controllers\UploadController::class,
+]);
 
 (new \App\App(
     $container,
