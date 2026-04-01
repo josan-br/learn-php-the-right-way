@@ -4,8 +4,27 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\InvoiceStatus;
+
 class Invoice extends Model
 {
+    public function all(?InvoiceStatus $status = null): array
+    {
+        $binds = [];
+        $query = "SELECT * FROM `invoices`";
+
+        if ($status !== null) {
+            $query .= " WHERE `invoices`.`status` = :status";
+            $binds['status'] = $status->value;
+        }
+
+        $stmt = $this->db->prepare($query);
+
+        $stmt->execute($binds);
+
+        return $stmt->fetch() ?: [];
+    }
+
     public function create(int $userId, float $amount): int
     {
         $query = <<<'SQL'
