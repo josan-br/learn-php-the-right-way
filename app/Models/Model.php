@@ -7,7 +7,7 @@ namespace App\Models;
 
 abstract class Model
 {
-    protected \App\DB $db;
+    protected \App\Foundation\DB $db;
 
     public function __construct()
     {
