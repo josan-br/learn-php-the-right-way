@@ -32,9 +32,11 @@ class Container implements ContainerInterface
         return isset($this->entries[$id]);
     }
 
-    public function set(string $id, callable|string $concrete): void
+    public function set(string $id, callable|string $concrete): static
     {
         $this->entries[$id] = $concrete;
+
+        return $this;
     }
 
     public function resolve(string $id)
