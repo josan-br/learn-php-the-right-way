@@ -33,3 +33,12 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./storage/db:/var/lib/mysql
+
+  mail:
+    image: axllent/mailpit
+    container_name: lptrw-mail
+    ports:
+      - 8025:8025
+      - 1025:1025
+    volumes:
+      - ./storage/mail:/data

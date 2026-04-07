@@ -4,6 +4,7 @@ namespace App\Foundation;
 
 /**
  * @property-read array{host:string, username:string, password:string, database:string, driver:string}|null $database
+ * @property-read array{dsn:string}|null $mailer
  */
 final class Config
 {
@@ -18,6 +19,9 @@ final class Config
                 'password' => $env['DB_PASSWORD'],
                 'database' => $env['DB_DATABASE'],
                 'driver' => $env['DB_DRIVER'] ?? 'mysql',
+            ],
+            'mailer' => [
+                'dsn' => $env['MAILER_DSN']
             ]
         ];
     }
