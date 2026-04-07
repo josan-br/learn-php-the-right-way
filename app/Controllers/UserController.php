@@ -10,15 +10,10 @@ use App\Foundation\View;
 
 use App\Responses\RedirectResponse;
 
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Address;
 
 final class UserController
 {
-    public function __construct(
-        protected MailerInterface $mailer
-    ) {}
-
     #[Get('/users/create')]
     public function create(): View
     {
@@ -38,22 +33,22 @@ final class UserController
         Thank you for signing up!
         Body;
 
-        $html = <<<HTMLBody
-        <h1 style="text-align: center; color: blue;">Welcome!</h1>
-        Hello $firstName,
-        <br />
-        Thank you for signing up!
-        HTMLBody;
+        $html = <<<HTML
+        <body>
+            <h1 style="text-align: center; color: blue;">Welcome!</h1>
+            Hello $firstName,
+            <br />
+            Thank you for signing up!
+        </body>
+        HTML;
 
-        $email = (new Email())
-            ->from('support@example.com')
-            ->to($_POST['email'])
-            ->subject('Welcome!')
-            ->text($text)
-            ->html($html)
-            ->attach('Hello Word!', 'welcome.txt');
-
-        $this->mailer->send($email);
+        (new \App\Models\Email)->queue(
+            new Address($_POST['email']),
+            new Address('support@example.com'),
+            'Welcome!',
+            $html,
+            $text
+        );
 
         return new RedirectResponse('/users/create');
     }
