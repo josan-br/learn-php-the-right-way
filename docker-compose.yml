@@ -42,3 +42,12 @@ services:
       - 1025:1025
     volumes:
       - ./storage/mail:/data
+
+  cron:
+    build:
+      context: ./docker/cron
+      dockerfile: Dockerfile
+    container_name: lptrw-cron
+    volumes:
+      - ./:/var/www/html
+      - ./docker/cron/log:/var/log/cron
